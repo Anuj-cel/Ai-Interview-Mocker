@@ -1,36 +1,163 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Interview Mocker 🎯
 
-## Getting Started
+An intelligent AI-powered interview preparation platform that simulates real technical interviews with personalized feedback and comprehensive analytics.
 
-First, run the development server:
+## 🌟 Features
 
+- **🔐 Secure Authentication** - Clerk integration for seamless user authentication
+- **🎤 Audio/Video Recording** - Real-time audio and video capture during mock interviews
+- **🤖 AI-Powered Questions** - Dynamic question generation based on job role and requirements
+- **📊 Comprehensive Feedback** - Detailed analysis and feedback on interview performance
+- **💾 Data Persistence** - All interview data stored securely using Drizzle ORM with Neon DB
+- **📈 Progress Tracking** - Track improvement over multiple interview sessions
+- **🎯 Role-Specific Preparation** - Customized interviews for different tech positions
+
+## 🚀 Live Demo
+
+**[🔗 Try AI Interview Mocker](https://ai-interview-mocker-rust-eight.vercel.app)**
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js 15, React 19, TypeScript
+- **Authentication:** Clerk
+- **Database:** Neon PostgreSQL with Drizzle ORM
+- **Styling:** Tailwind CSS
+- **Deployment:** Vercel
+- **Media Handling:** Web APIs for audio/video recording
+
+## 📋 How It Works
+
+1. **Sign Up/Login** - Secure authentication with Clerk
+2. **Setup Interview** - Provide job details:
+   - Job Role (Frontend Developer, Backend Developer, Full Stack, etc.)
+   - Job Description and Required Skills (React, Node.js, Python, etc.)
+   - Years of Experience
+3. **Take Mock Interview** - AI generates relevant questions based on your inputs
+4. **Record Responses** - Answer questions with audio and video recording
+5. **Get Feedback** - Receive detailed AI-generated feedback on your performance
+6. **Track Progress** - All sessions saved to review improvement over time
+
+## 🏗️ Installation & Setup
+
+### Prerequisites
+- Node.js 18+ and pnpm
+- Clerk account for authentication
+- Neon database for data storage
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/ai-mocker.git
+cd ai-mocker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3. Environment Variables
+Create a `.env.local` file in the root directory:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
 
-## Learn More
+# Database
+DATABASE_URL=your_neon_database_url
 
-To learn more about Next.js, take a look at the following resources:
+# AI Service (if using external API)
+OPENAI_API_KEY=your_openai_api_key
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# App URLs
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Database Setup
+```bash
+# Generate database migrations
+pnpm db:generate
 
-## Deploy on Vercel
+# Push schema to database
+pnpm db:push
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 5. Run the development server
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+## 📁 Project Structure
+
+```
+ai-mocker/
+├── app/                    # Next.js app router
+│   ├── (auth)/            # Authentication pages
+│   ├── dashboard/         # Main dashboard
+│   ├── interview/         # Interview pages
+│   └── globals.css        # Global styles
+├── components/            # Reusable React components
+├── lib/                   # Utilities and configurations
+│   ├── db.ts             # Database connection
+│   └── utils.ts          # Helper functions
+├── drizzle/              # Database schema and migrations
+├── public/               # Static assets
+└── package.json
+```
+
+## 🎨 Key Components
+
+- **Interview Setup Form** - Collects job requirements and experience level
+- **Recording Interface** - Handles audio/video capture with user-friendly controls
+- **Question Generator** - AI-powered question generation based on job requirements
+- **Feedback Dashboard** - Displays comprehensive interview analysis
+- **Progress Tracker** - Shows improvement metrics across sessions
+
+## 🔒 Database Schema
+
+The application uses Drizzle ORM with the following main entities:
+
+- **Users** - User profiles and authentication data
+- **Interviews** - Interview session metadata
+- **Questions** - Generated questions for each interview
+- **Responses** - User responses with audio/video data
+- **Feedback** - AI-generated feedback and scores
+
+## 🚀 Deployment
+
+This project is optimized for deployment on Vercel:
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically with each push
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Clerk](https://clerk.com) for authentication
+- [Neon](https://neon.tech) for database hosting
+- [Drizzle ORM](https://orm.drizzle.team) for database management
+- [Vercel](https://vercel.com) for deployment
+
+---
+
+**Built with ❤️ for interview preparation and career growth**
