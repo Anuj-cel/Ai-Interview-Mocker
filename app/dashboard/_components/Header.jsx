@@ -18,9 +18,13 @@ function Header() {
         <ul className='hidden md:flex gap-6'>
           <Link href={"/dashboard"}>
         <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path==='/dashboard'&& `text-primary font-bold`}`}>Dashboard</li>  </Link>
+        <Link href={"/dashboard/questions"}>
          <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path==='/dashboard/questions'&& `text-primary font-bold`}`}>Questions</li>
+        </Link>
+        <Link href={"/dashboard/upgrade"}>
           <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path==='/dashboard/upgrade'&& `text-primary font-bold`}`}>Upgrade</li>
-          <li className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${path==='/dashboard/questions'&& `text-primary font-bold`}`}>How it Works?</li>
+        </Link>
+         
         </ul>
         <UserButton/>
     </div>

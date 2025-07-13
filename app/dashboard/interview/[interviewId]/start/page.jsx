@@ -15,7 +15,7 @@ function StartInterview({ params }) {
   const { interviewId } = use(params);
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
   const [loading, setLoading] = useState(true);
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(1);
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   console.log("Length of array ", mockInterviewQuestion?.length);
   const GetInteviewDetails = async () => {
     const result = await db.select().from(MockInterview)

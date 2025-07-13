@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { ArrowRight, Brain, Target, Users, CheckCircle, Star, Play, Zap, Shield, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 export default function LandingPage() {
@@ -9,8 +10,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg"></div>
-              <span className="text-white font-bold text-xl">Logoipsum</span>
+<Image src={"/logo.svg"} width={160} height={100} alt='logo'/>            
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-white/80 hover:text-white transition-colors">Features</a>

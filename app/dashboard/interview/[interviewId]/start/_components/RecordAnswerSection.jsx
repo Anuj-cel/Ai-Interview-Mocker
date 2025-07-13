@@ -13,7 +13,7 @@ import generateContent from '@/utils/GeminiAiModel'
 import db from '@/utils/db'
 import { UserAnswer } from '@/utils/schema'
 import { useUser } from '@clerk/nextjs'
-import { eq,and } from 'drizzle-orm'
+import { eq, and } from 'drizzle-orm'
 import moment from 'moment/moment'
 function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, interviewId }) {
     const [cameraOn, setCameraOn] = useState(false);
@@ -31,30 +31,34 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         useLegacyResults: false
     });
     const user = useUser().user;
-    const questions = typeof mockInterviewQuestion === 'string' ? JSON.parse(mockInterviewQuestion) :mockInterviewQuestion;
-        console.log("The is MockInterview ", questions[activeQuestionIndex]?.Questions);
+    const questions = typeof mockInterviewQuestion === 'string' ? JSON.parse(mockInterviewQuestion) : mockInterviewQuestion;
+    // console.log("The is MockInterview ", questions[activeQuestionIndex]?.Questions);
     const [userAnswer, setUserAnswer] = useState('');
     useEffect(() => {
         console.log("Results", results)
         const transcripts = results.map(result => result.transcript).join(' ');
         setUserAnswer(transcripts);
     }, [results])
-    useEffect(() => {
-        if (!isRecording && userAnswer.length > 10)
-            updateUserAnswer();
-    }, [userAnswer,isRecording])
+    // useEffect(() => {
+    //     if (!isRecording && userAnswer.length > 10)
+    //         updateUserAnswer();
+    // }, [userAnswer, isRecording])
+
     const SaveUserAnswer = async () => {
         if (isRecording) {
             setCameraOn(false);
             stopSpeechToText();
             if (userAnswer?.length < 10) {
                 console.log("This is userAnser ", userAnswer)
+
+                toast.dismiss(); // Dismiss any pending toast notifications
                 toast.error("Error while saving your answer, Please record again")
                 return;
             }
-            else{
-
-                toast.success("User answer received successfully !")
+            else {
+              
+                toast.dismiss(); // Dismiss any pending toast notifications
+                // toast.success("User answer received successfully !")
                 await updateUserAnswer();
                 setUserAnswer("");
                 setResults([])
@@ -66,11 +70,12 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         }
     }
     const updateUserAnswer = async () => {
+  console.log("This is userAnser ", userAnswer)
         const feedbackPrompt = "Question:" + questions[activeQuestionIndex]?.Questions + ", User Answer " + userAnswer + ",Depends on question and user answer " + "please give us rating for answer from 0 to 5 and feedback as area of improvement if any in just 3 to 5 lines to improve it in json format with rating field and feedback field there should be no text outside json as it need to parse it";
         try {
             const response = await generateContent(feedbackPrompt);
             let geminiResponse = response.replaceAll("```json", "").replaceAll("```", "");
-            const result =await JSON.parse(geminiResponse);
+            const result = await JSON.parse(geminiResponse);
 
             // Define the data to be updated
             const updateData = {
@@ -95,11 +100,12 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
 
             if (updatedResp.length > 0) {
                 // Record was found and updated
-                console.log("User answer updated successfully:", updatedResp[0].id);
+                // console.log("User answer updated successfully:", updatedResp[0].id);
+                toast.dismiss(); // Dismiss any pending toast notifications
                 toast.success("Answer updated successfully!");
             } else {
                 // No existing record found for the given conditions, so insert a new one
-                console.log("No existing record found, inserting new user answer.");
+                // console.log("No existing record found, inserting new user answer.");
                 const insertedResp = await db.insert(UserAnswer)
                     .values({
                         mockIdRef: interviewId,
@@ -111,12 +117,14 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
                         userEmail: user?.primaryEmailAddress?.emailAddress,
                         createdAt: moment().format("DD-MM-YYYY")
                     }).returning({ id: UserAnswer.id });
-                console.log("New user answer inserted:", insertedResp[0].id);
+                // console.log("New user answer inserted:", insertedResp[0].id);
+                toast.dismiss(); // Dismiss any pending toast notifications
                 toast.success("Answer saved successfully!"); // Toast for new insertion
             }
 
         } catch (error) {
             console.error("Error processing user answer (update/insert):", error);
+            toast.dismiss(); // Dismiss any pending toast notifications
             toast.error("Failed to process your answer. Please try again.");
             return;
         }
