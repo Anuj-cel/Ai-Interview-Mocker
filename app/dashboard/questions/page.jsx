@@ -83,11 +83,11 @@
                   ))}
                 </div>
                 <div className="flex justify-between items-center mt-4">
-                  <Link href={`/dashboard/interview/${question.id}`}> {/* Example route for interview practice */}
+                  {/* <Link href={`/dashboard/interview/${question.id}`}> Example route for interview practice */}
                     <button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
                       <PlayCircle className="w-4 h-4" /> Practice
                     </button>
-                  </Link>
+                  {/* </Link> */}
                   <button className="text-gray-400 hover:text-purple-400 transition-colors">
                     <Bookmark className="w-5 h-5" />
                   </button>
