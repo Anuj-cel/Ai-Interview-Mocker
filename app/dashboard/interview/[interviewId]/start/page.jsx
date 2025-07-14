@@ -10,8 +10,10 @@ import db from '@/utils/db';
 import { eq } from 'drizzle-orm';
 import Link from 'next/link';
 import RecordAnswerSection from './_components/RecordAnswerSection';
+import QuestionsSectionShimmer from './_components/QuestionSectionShimmer';
+
 function StartInterview({ params }) {
-  
+
   const { interviewId } = use(params);
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
   const [loading, setLoading] = useState(true);
@@ -27,24 +29,31 @@ function StartInterview({ params }) {
   useEffect(() => {
     GetInteviewDetails();
   }, [])
-  if (loading) return <p>Loading...</p>
+
   return (
-    <div>
+    <>
+      {
+        loading ?
+          <>
+            <QuestionsSectionShimmer />
+          </> :
+          <div>
+            <div className="flex gap-2">
+              <QuestionsSection mockInterviewQuestion={mockInterviewQuestion} activeQuestionIndex={activeQuestionIndex} setActiveQuestionIndex={setActiveQuestionIndex} />
+              <RecordAnswerSection mockInterviewQuestion={mockInterviewQuestion} activeQuestionIndex={activeQuestionIndex} interviewId={interviewId} />
+            </div>
+            <div className='flex justify-end gap-6 my-5'>
 
-      <div className="flex gap-2">
-        <QuestionsSection mockInterviewQuestion={mockInterviewQuestion} activeQuestionIndex={activeQuestionIndex} setActiveQuestionIndex={setActiveQuestionIndex} />
-        <RecordAnswerSection mockInterviewQuestion={mockInterviewQuestion} activeQuestionIndex={activeQuestionIndex} interviewId={interviewId} />
-      </div>
-      <div className='flex justify-end gap-6 my-5'>
-
-        {activeQuestionIndex > 0 && <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Question</Button>}
-        {activeQuestionIndex < 4 && <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>}
-        <Link href={"/dashboard/interview/" + interviewId + "/feedback"}>
-          {activeQuestionIndex == 4 && <Button className={"cursor-pointer"}>End Interview</Button>}
-        </Link>
-      </div>
-    </div>
+              {activeQuestionIndex > 0 && <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Question</Button>}
+              {activeQuestionIndex < 4 && <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>}
+              <Link href={"/dashboard/interview/" + interviewId + "/feedback"}>
+                {activeQuestionIndex == 4 && <Button className={"cursor-pointer"}>End Interview</Button>}
+              </Link>
+            </div>
+          </div>
+      }
+    </>
   )
-}
 
-export default StartInterview
+}
+  export default StartInterview

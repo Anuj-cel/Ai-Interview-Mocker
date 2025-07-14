@@ -12,9 +12,10 @@ import { Button } from '@/components/ui/button';
 import { Lightbulb } from 'lucide-react';
 import { useContext } from 'react';
 import { InterviewContext } from '@/utils/context';
+import InterviewShimmer from "./start/_components/InterviewShimmer";
 import Link from 'next/link';
 function Interview({ params }) {
-    const { interviewData,setInterviewData } = useContext(InterviewContext);
+    const { interviewData, setInterviewData } = useContext(InterviewContext);
     const [webCamEnabled, setWebCamEnabled] = useState(false);
     const [loading, setLoading] = useState(true);
     const { interviewId } = use(params)
@@ -33,7 +34,7 @@ function Interview({ params }) {
     return (
         <div className='my-10'>
             {
-                loading ? <p>Loading...</p> :
+                loading ? <InterviewShimmer /> :
                     <>
                         <h2 className='font-bold text-2xl'>Let's Get Started</h2>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-10 '>
@@ -62,8 +63,8 @@ function Interview({ params }) {
                             </div>
                         </div>
                         <div className='flex justify-end items-end'>
-                            <Link href={"/dashboard/interview/"+interviewId+"/start"}>
-                            <Button className={"bg-blue-700"}>Start Interview </Button>
+                            <Link href={"/dashboard/interview/" + interviewId + "/start"}>
+                                <Button className={"bg-blue-700"}>Start Interview </Button>
                             </Link>
                         </div>
                     </>

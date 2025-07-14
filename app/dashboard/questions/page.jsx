@@ -11,6 +11,62 @@
     { id: 3, text: "Design a URL shortener.", type: "System Design", role: "Full Stack", difficulty: "Advanced", tags: ["System Design", "Scalability"] },
     { id: 4, text: "What is an API Gateway and why is it used?", type: "Technical", role: "Backend", difficulty: "Intermediate", tags: ["APIs", "Microservices"] },
     { id: 5, text: "How would you test a new feature?", type: "QA", role: "QA Engineer", difficulty: "Beginner", tags: ["Testing", "QA"] },
+    { 
+    id: 6, 
+    text: "What are the differences between monolithic architecture and microservices architecture?", 
+    type: "Technical", 
+    role: "Backend", 
+    difficulty: "Intermediate", 
+    tags: ["Architecture", "Microservices"] 
+  },
+  { 
+    id: 7, 
+    text: "How do you handle errors in a Node.js application?", 
+    type: "Technical", 
+    role: "Backend", 
+    difficulty: "Beginner", 
+    tags: ["Error Handling", "Node.js"] 
+  },
+  { 
+    id: 8, 
+    text: "What is the difference between null and undefined in JavaScript?", 
+    type: "Technical", 
+    role: "Frontend", 
+    difficulty: "Beginner", 
+    tags: ["JavaScript", "Basics"] 
+  },
+  { 
+    id: 9, 
+    text: "How would you optimize the performance of a slow database query?", 
+    type: "Technical", 
+    role: "Database Administrator", 
+    difficulty: "Advanced", 
+    tags: ["Database", "Performance Optimization"] 
+  },
+  { 
+    id: 10, 
+    text: "Can you explain the concept of a closure in JavaScript?", 
+    type: "Technical", 
+    role: "Frontend", 
+    difficulty: "Intermediate", 
+    tags: ["JavaScript", "Closures"] 
+  },
+  { 
+    id: 11, 
+    text: "What is the difference between a hash table and an array?", 
+    type: "Technical", 
+    role: "Backend", 
+    difficulty: "Beginner", 
+    tags: ["Data Structures", "Hash Tables"] 
+  },
+  { 
+    id: 12, 
+    text: "How would you implement authentication and authorization in a RESTful API?", 
+    type: "Technical", 
+    role: "Backend", 
+    difficulty: "Intermediate", 
+    tags: ["Security", "APIs"] 
+  },
   ];
 
   export default function    page() {
@@ -31,7 +87,7 @@
 
     return (
       <div className="p-8">
-        <h1 className="text-3xl font-bold mb-8 text-white">Interview Questions</h1>
+        <h1 className="text-3xl font-bold mb-8 text-grey-800">Interview Questions</h1>
         
         {/* Search and Filters */}
         <div className="bg-gray-800 p-6 rounded-lg shadow-md mb-8 flex flex-wrap gap-4 items-center">
@@ -85,7 +141,7 @@
                 <div className="flex justify-between items-center mt-4">
                   {/* <Link href={`/dashboard/interview/${question.id}`}> Example route for interview practice */}
                     <button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
-                      <PlayCircle className="w-4 h-4" /> Practice
+                      {/* <PlayCircle className="w-4 h-4" /> Practice */}
                     </button>
                   {/* </Link> */}
                   <button className="text-gray-400 hover:text-purple-400 transition-colors">

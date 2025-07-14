@@ -7,36 +7,45 @@ import { desc, eq } from 'drizzle-orm';
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import InterviewItemCardShimmer from './InterviewItemCardShimmer';
 
 function InterviewList() {
-    const user=useUser().user;
-    console.log("This is user45465 ",user?.primaryEmailAddress?.emailAddress)
-    const [interviewList,setInterviewList]=useState();
-    const GetInterviewList=async()=>{
-        const result=await db.select()
-        .from(MockInterview)
-        .where(eq(MockInterview.createdBy,user.primaryEmailAddress.emailAddress))
-        .orderBy(desc(MockInterview.id));
+    const user = useUser().user;
+    console.log("This is user45465 ", user?.primaryEmailAddress?.emailAddress)
+    const [interviewList, setInterviewList] = useState();
+    const GetInterviewList = async () => {
+        const result = await db.select()
+            .from(MockInterview)
+            .where(eq(MockInterview.createdBy, user.primaryEmailAddress.emailAddress))
+            .orderBy(desc(MockInterview.id));
         setInterviewList(result);
-        console.log("Previous Mock ",result)
+        console.log("Previous Mock ", result)
     }
-    useEffect(()=>{
-        user&&GetInterviewList();
-    },[user])
-    if(interviewList===undefined)return <p>Loading...</p>
-  return (
-    <div>
-        {console.log("This is interviewList ",interviewList)}
-        <h2 className='font-medium text-xl'>Previous Mock Interview</h2>
-        <div className='grid gri  md:grid-cols-2 lg:grid-cols-3 gap-5 my-3'>
+    useEffect(() => {
+        user && GetInterviewList();
+    }, [user])
+    return (
+        <div>
+            {console.log("This is interviewList ", interviewList)}
+            <h2 className='font-medium text-xl'>Previous Mock Interview</h2>
             {
-                interviewList&&interviewList.map((interview,index)=>(
-                    <InterviewItemCard interview={interview} key={index}/>
-                ))
+                interviewList === undefined ?
+                    <div className='grid   md:grid-cols-2 lg:grid-cols-3 gap-5 my-3'>
+                        {
+                            [1, 2, 3, 4, 5].map((interview, index) => (
+                                <InterviewItemCardShimmer />
+                            ))
+                        }</div> :
+                    <div className='grid   md:grid-cols-2 lg:grid-cols-3 gap-5 my-3'>
+                        {
+                            interviewList && interviewList.map((interview, index) => (
+                                <InterviewItemCard interview={interview} key={index} />
+                            ))
+                        }
+                    </div>
             }
         </div>
-    </div>
-  )
+    )
 }
 
 export default InterviewList
